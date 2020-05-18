@@ -2,7 +2,10 @@
 ## Compressed files
 ##==============================================
 data/complaints.csv
+data/complaints.json
 data/complaints.csv.zip
+data/complaints.json.zip
+data/comp*
 
 ##==============================================
 ## Compressed files
