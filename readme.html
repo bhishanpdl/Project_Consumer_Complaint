@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+</head>
+<body>
+<h1 style="background-color:tomato;">
+Background of the Data
+</h1>
+<ul>
+<li>Data Source: https://catalog.data.gov/dataset/consumer-complaint-database</li>
+</ul>
+<p>The dataset is obtained from the public data from data.gov website under the domain <code>consumer-complaint-database</code>. The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response. The database generally updates daily. So, each day when we download the dataset, it may be larger than the previous dataset.</p>
+<p>The dataset has above 1 million rows and 18 columns out of which, for the text data category classification, we are only interested in two features: <code>Product</code> and <code>Consumer complaint narrative</code>.</p>
+<h1 style="background-color:tomato;">
+Business Problem
+</h1>
+<p>This project aims to accurately classify the Product category of the complaint. There are more than 10 categories of the product such as <code>Mortgage</code>, <code>Debt collection</code> and so on. Our aim is to read the text complaint and classify as on of these category.</p>
+<p style="color:green;">
+NOTE
+</p>
+<p>Originally there are more than 10 categories in original database, but some of the categories are ambiguous, such as there are three different categories <code>Credit card</code>, <code>Prepaid card</code>, and <code>Credit card or prepaid card</code>. If we have a given complaint about credit card, what should it be classified as? <code>Credit card</code> or <code>Credit card and prepaid card</code> ? To avoid this problem the ambiguous categories are merged into one single categories and finally we have only 10 different categories. For a sample of 2,000 data, the category distribution looks like this: <img src="images/categories_2k.png" /></p>
+<h1 style="background-color:tomato;">
+Text Data Cleaning
+</h1>
+<p>Usually the written text is full of informal language and requires cleaning the text before we proceed with analyzing the text. For example, we need to remove the STOPWORDS and expand the contractions. Data cleaning strategy: 1. split combined text: <code>areYou</code> ==&gt; <code>are You</code> 1. lowercase: <code>You</code> ==&gt; <code>you</code> 1. expand apostrophes: <code>you're</code> ==&gt; <code>you are</code> 1. remove punctuation: <code>hi !</code> ==&gt; <code>hi</code> 1. remove digits: <code>gr8</code> ==&gt; <code>gr</code> 1. remove repeated substring: <code>ha ha</code> ==&gt; <code>ha</code> 1. remove stop words: <code>I am good</code> ==&gt; <code>good</code> 1. lemmatize: <code>apples</code> ==&gt; <code>apple</code></p>
+<h1 style="background-color:tomato;">
+Tf-idf:
+</h1>
+<p>For the text processing tasks (NLP), we usually use a method called <code>Term Frequency - Inverse Document Frequency</code>.</p>
+<p style="color:green;">
+Term Frequency:
+</p>
+<p>This gives how often a given word appears within a document.</p>
+<pre><code>
+TF = Number of times the term appears in the doc
+     ----------------------------------------------
+     Total number of words in the doc
+</code></pre>
+<p style="color:green;">
+Inverse Document Frequency:
+</p>
+<p>This gives how often the word appers across the documents. If a term is very common among documents (e.g.,<code>the</code>, <code>a</code>, <code>is</code>), then we have low IDF score.</p>
+<pre><code>            Number of docs
+IDF = ln (  --------------------------------)
+            Number docs the term appears in</code></pre>
+<p style="color:green;">
+Term Frequency – Inverse Document Frequency TF-IDF:
+</p>
+<p>TF-IDF is the product of the TF and IDF scores of the term.</p>
+<pre><code>           TF
+TF-IDF = ------
+           IDF</code></pre>
+<h1 style="background-color:tomato;">
+Top N correlated terms per category
+</h1>
+<p>We can use scikitlearn text vectorizer class <code>sklearn.feature_extraction.text.TfidfVectorizer</code> to get the vectorized form of given text data. Then using feature selection (<code>sklearn.feature_selection.chi2</code>) we get following top most unigrams and bigrams for each categories: <img src="images/top_correlated_terms.png" /></p>
+<h1 style="background-color:tomato;">
+Modelling Text data
+</h1>
+<p>We can process the raw text data in machine learning libraries. So we first clean the data and then use <code>TfidfVectorizer</code> to get vectorized data from text data. Here we allocate 25% of the data for the test and 75% of the data for the training purposes. We look at various machine learning models and assess the accuracies. Out of those models tested, support vector machine stood on top of others and presented the highest accuracy. <img src="images/model_comparison.png" /></p>
+<p>After hyperparameter tuning for the Linear SVC, I got higher accuracy of 0.7222.</p>
+<h1 style="background-color:tomato;">
+Model Evaluation
+</h1>
+<p><img src="images/confusion_matrix.png" /> <img src="images/class_prediction_error.png" /> <img src="images/classification_report.png" /> <img src="images/roc_auc.png" /> <img src="images/precision_recall.png" /></p>
+<h1 style="background-color:tomato;">
+Big Data Analysis
+</h1>
+<p>Here we so far we have used only the portion of the data (2,000 samples out of million samples) and used scikit-learn models. But for real world data we may need to use all data for better performances. For large data pandas can not handle the data and the program crashes. So, we need to use big data architectures such as Amazon AWS or IMB Watson so on, where we can use pandas by assigning larger RAM and CPU. However, we can also use distributed modules such as dask or pyspark. Here, I have used pyspark since it scales upto hundreds of GB of data and can be run in single node or personal computer.</p>
+<p style="color:green;">
+NOTE:
+</p>
+<p>Pyspark is an immature library. It was borrowed from scala and many functionalities are still need to be implemented. For example, while reading the <code>complaints.csv</code> file, using pandas we can simply use <code>pd.read_csv</code>, however, pyspark is not sophisticated enough to read the csv file automatically when it has multiline. To cirumvent these obstacles we can use spark read option with <code>multiLine=True, escape='&quot;'</code>.</p>
+<h1 style="background-color:tomato;">
+Modelling Pipeline
+</h1>
+<p>For text data processing using pyspark, here I have used following pipelines:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> Tokenizer,StopWordsRemover,HashingTF,IDF
+
+tokenizer <span class="op">=</span> Tokenizer().setInputCol(<span class="st">&quot;complaint&quot;</span>).setOutputCol(<span class="st">&quot;words&quot;</span>)
+remover<span class="op">=</span> StopWordsRemover().setInputCol(<span class="st">&quot;words&quot;</span>).setOutputCol(<span class="st">&quot;filtered&quot;</span>).setCaseSensitive(<span class="va">False</span>)
+hashingTF <span class="op">=</span> HashingTF().setNumFeatures(<span class="dv">1000</span>).setInputCol(<span class="st">&quot;filtered&quot;</span>).setOutputCol(<span class="st">&quot;rawFeatures&quot;</span>)
+idf <span class="op">=</span> IDF().setInputCol(<span class="st">&quot;rawFeatures&quot;</span>).setOutputCol(<span class="st">&quot;features&quot;</span>).setMinDocFreq(<span class="dv">0</span>)</code></pre></div>
+</body>
+</html>
