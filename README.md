@@ -91,6 +91,7 @@ We can process the raw text data in machine learning libraries. So we first clea
 After hyperparameter tuning for the Linear SVC, I got higher accuracy of 0.7222.
 
 <h1 style="background-color:tomato;">Model Evaluation</h1>
+
 ![](images/confusion_matrix.png)
 ![](images/class_prediction_error.png)
 ![](images/classification_report.png)
