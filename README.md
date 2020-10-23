@@ -51,7 +51,6 @@ TF = Number of times the term appears in the doc
 ```
 
 
-
 <p style="color:green;">Inverse Document Frequency:</p>
 
 This gives how often the word appers across the documents.
