@@ -12,8 +12,8 @@ N_SAMPLES= 2_000  # small number of samples to train the model.
 
 # models
 model_dir = os.path.join('..','models')
-model_linsvc_tfidf_path = os.path.join(model_dir,'tfidf.pkl')
-tfidf_fitted_vec_path = os.path.join(model_dir,'tfidf_fitted_vec_path.pkl')
+model_linsvc_tfidf_path = os.path.join(model_dir,'tfidf.joblib')
+tfidf_fitted_vec_path = os.path.join(model_dir,'tfidf_fitted_vec_path.joblib')
 
 # output images
 img_dir = os.path.join('..','images')

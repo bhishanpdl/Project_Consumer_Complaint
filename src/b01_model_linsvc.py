@@ -26,8 +26,9 @@ tfidf_fitted_vec_path = config.tfidf_fitted_vec_path
 compression= config.compression
 
 # Load the data
-#===================================================
-df = pd.read_csv(ifile,compression=compression)
+#================================================================
+usecols = ['complaint_clean','product']
+df = pd.read_csv(ifile,compression=compression,usecols=usecols)
 print(f'clean data shape: {df.shape}')
 
 # Data Processing
@@ -42,22 +43,26 @@ X_train, X_test, y_train, y_test = train_test_split(X, y,
 # Modelling
 #===============================================================
 if RE_TRAIN:
+    # vectorizer and model
     tfidf = TfidfVectorizer(**config.params_tfidf)
-
-    fitted_vectorizer = tfidf.fit(X_train)
-    tfidf_vectorizer_vectors = fitted_vectorizer.transform(X_train)
-
     model = svm.LinearSVC(**config.params_linsvc)
-    model.fit(tfidf_vectorizer_vectors, y_train)
+
+    # fit the vectorizer
+    fitted_vectorizer = tfidf.fit(X_train)
+    Xtrain_text = fitted_vectorizer.transform(X_train)
+
+    # fit the model
+    model.fit(Xtrain_text, y_train)
+
+    # persist the models
     joblib.dump(model, model_linsvc_tfidf_path )
     joblib.dump(fitted_vectorizer, tfidf_fitted_vec_path)
-else:
-    fitted_vectorizer = joblib.load(tfidf_fitted_vec_path)
-    model = joblib.load(model_linsvc_tfidf_path)
 
 #==================================================================
 # Model Evaluation
-tfidf_fitted_vec_path = joblib.load(tfidf_fitted_vec_path)
+fitted_vectorizer = joblib.load(tfidf_fitted_vec_path)
+model = joblib.load(model_linsvc_tfidf_path)
+
 X_test = fitted_vectorizer.transform(X_test)
 ypreds = model.predict(X_test)
 print('Accuracy              : {:.4f} '.format(metrics.accuracy_score(y_test,ypreds)))
