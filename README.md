@@ -83,26 +83,27 @@ following top most unigrams and bigrams for each categories:
 
 <h1 style="background-color:tomato;">Modelling Text data</h1>
 
-We can process the raw text data in machine learning libraries. So we first clean the data and then use
-`TfidfVectorizer` to get vectorized data from text data. Here we allocate 25% of the data for the test and 75% of the data for the training purposes. We look at various machine learning models and assess the accuracies. Out of those models tested, support vector machine stood on top of others and presented the highest accuracy.
-![](images/model_comparison.png)
-
-After hyperparameter tuning for the Linear SVC, I got higher accuracy of 0.7222.
+We can not use the raw text data as the input for scikit-learn classifiers.
+We first need to vectorize them and convert the words to number. Here, in this
+project I have used the Tf-idf vectorizer with ngram of (1,2) and tried varios
+classifiers. Among many classifiers, I found svm.LinearSVC gave me the best accuracy.
+For the 2019 data with sampling of 2000 samples with random seed of 100, I got the
+accuracy of 0.8125 for the test data. For the full data of 2019 (124,907 almost 125k)
+after splitting train-test as 80%-20%, I got the accuracy of 0.8068.
 
 <h1 style="background-color:tomato;">Model Evaluation</h1>
 
-![](images/confusion_matrix.png)
-![](images/class_prediction_error.png)
 ![](images/classification_report.png)
+![](images/confusion_matrix.png)
 ![](images/roc_auc.png)
 ![](images/precision_recall.png)
+![](images/class_prediction_error.png)
 
 <h1 style="background-color:tomato;">Big Data Analysis</h1>
 
-Here we so far we have used only the portion of the data (2,000 samples out of million samples) and used
-scikit-learn models. But for real world data we may need to use all data for better performances. For large
-data pandas can not handle the data and the program crashes. So, we need to use big data architectures such as
-Amazon AWS or IMB Watson so on, where we can use pandas by assigning larger RAM and CPU. However, we can also use distributed modules such as dask or pyspark. Here, I have used pyspark since it scales upto hundreds of GB of data and can be run in single node or personal computer.
+Here, we have so far used only the portion of the data (2,000 samples out of million samples) and used scikit-learn models. But for real world data we may need to use all data for better performances. For large
+data pandas can not handle the data and the program crashes. So, we need to use the big data architectures such as
+Amazon AWS or IMB Watson so on, where we can use pandas by assigning larger RAM and CPU. However, we can also use the open source free modules such as dask or pyspark which can scale upto multiple gigabytes of data. Here, I have used pyspark which can be both used in laptop and also in Amazon AWS servers.
 
 <p style="color:green;">NOTE:</p>
 
