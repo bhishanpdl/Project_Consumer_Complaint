@@ -59,7 +59,7 @@ then we have low IDF score.
 
 ```
             Number of docs
-IDF = ln (  --------------------------------)
+DF = ln (  --------------------------------)
 		    Number docs the term appears in
 ```
 
@@ -70,7 +70,7 @@ TF-IDF is the product of the TF and IDF scores of the term.
 ```
            TF
 TF-IDF = ------
-           IDF
+           DF
 ```
 
 <h1 style="background-color:tomato;">Top N correlated terms per category</h1>
