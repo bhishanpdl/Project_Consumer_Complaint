@@ -9,11 +9,11 @@
 
 
 <style type="text/css">
-    pre { line-height: 125%; margin: 0; }
-td.linenos pre { color: #000000; background-color: #f0f0f0; padding: 0 5px 0 5px; }
-span.linenos { color: #000000; background-color: #f0f0f0; padding: 0 5px 0 5px; }
-td.linenos pre.special { color: #000000; background-color: #ffffc0; padding: 0 5px 0 5px; }
-span.linenos.special { color: #000000; background-color: #ffffc0; padding: 0 5px 0 5px; }
+    pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
 .highlight .hll { background-color: var(--jp-cell-editor-active-background) }
 .highlight { background: var(--jp-cell-editor-background); color: var(--jp-mirror-editor-variable-color) }
 .highlight .c { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment */
@@ -14259,6 +14259,12 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><h1>Table of Contents<span class="tocSkip"></span></h1></p>
+<div class="toc"><ul class="toc-item"><li><span><a href="#Description" data-toc-modified-id="Description-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Description</a></span><ul class="toc-item"><li><span><a href="#Data-Description" data-toc-modified-id="Data-Description-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>Data Description</a></span></li></ul></li><li><span><a href="#Business-Problem" data-toc-modified-id="Business-Problem-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Business Problem</a></span></li><li><span><a href="#Imports" data-toc-modified-id="Imports-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Imports</a></span></li><li><span><a href="#Useful-Scripts" data-toc-modified-id="Useful-Scripts-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Useful Scripts</a></span></li><li><span><a href="#Load-the-data" data-toc-modified-id="Load-the-data-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Load the data</a></span></li><li><span><a href="#Train-Test-Split" data-toc-modified-id="Train-Test-Split-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>Train Test Split</a></span></li><li><span><a href="#Modelling:-LinearSVC" data-toc-modified-id="Modelling:-LinearSVC-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>Modelling: LinearSVC</a></span></li><li><span><a href="#Model-Predictions" data-toc-modified-id="Model-Predictions-8"><span class="toc-item-num">8&nbsp;&nbsp;</span>Model Predictions</a></span></li><li><span><a href="#Mis-classified-Cases" data-toc-modified-id="Mis-classified-Cases-9"><span class="toc-item-num">9&nbsp;&nbsp;</span>Mis-classified Cases</a></span></li><li><span><a href="#Most-correlated-terms-with-each-category" data-toc-modified-id="Most-correlated-terms-with-each-category-10"><span class="toc-item-num">10&nbsp;&nbsp;</span>Most correlated terms with each category</a></span></li><li><span><a href="#Predictions" data-toc-modified-id="Predictions-11"><span class="toc-item-num">11&nbsp;&nbsp;</span>Predictions</a></span></li><li><span><a href="#Total-Time-Taken" data-toc-modified-id="Total-Time-Taken-12"><span class="toc-item-num">12&nbsp;&nbsp;</span>Total Time Taken</a></span></li></ul></div>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <div class="alert alert-block alert-success">
 <b>Kernel Author:</b>  <br>
 <a href="https://bhishanpdl.github.io/" , target="_blank">Bhishan Poudel,  Data Scientist, Ph.D Astrophysics</a> .
@@ -14291,7 +14297,7 @@ then we have low IDF score.</p>
 <p>$\mathrm{IDF}=\ln \left(\frac{\text { Number of docs }}{\text { Number docs the term appears in }}\right)$</p>
 <p><strong>Term Frequency – Inverse Document Frequency TF-IDF</strong>: 
 TF-IDF is the product of the TF and IDF scores of the term.</p>
-<p>$\mathrm{TF}-\mathrm{IDF}=\frac{\mathrm{TF}}{\mathrm{IDF}}$</p>
+<p>$\mathrm{TF}\mathrm{IDF}=\mathrm{TF} * \mathrm{IDF}$</p>
 <p>In machine learning, TF-IDF is obtained from the class <code>TfidfVectorizer</code>.
 It has following parameters:</p>
 <ul>
@@ -14303,6 +14309,16 @@ total number of files in corpus.</li>
 <li><code>stop_words</code>: remove the predefined stop words in 'english':</li>
 <li><code>use_idf</code>: weight factor must use inverse document frequency.</li>
 <li><code>ngram_range</code>: (1,2) to indicate that unigrams and bigrams will be considered.</li>
+</ul>
+<p>NOTE:</p>
+<ul>
+<li><code>TF</code> is same in sklearn and textbook but <code>IDF</code> if different (to address divide by zero problem)</li>
+<li><p>Ref: <a href="https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction">https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction</a></p>
+</li>
+<li><p>Here, <code>df(t)</code> is  is the number of documents in the document set that contain term t in it.
+<img src="images/tfidf_sklearn.png" alt="">
+<img src="images/tfidf_flashcards.png" alt=""></p>
+</li>
 </ul>
 
 </div>
