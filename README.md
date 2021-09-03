@@ -16,7 +16,7 @@ This project aims to accurately classify the Product category of the complaint. 
 Originally there are more than 10 categories in original database, but some of the categories are
 ambiguous, such as there are three different categories `Credit card`, `Prepaid card`, and `Credit card or prepaid card`. If we have a given complaint about credit card, what should it be classified as? `Credit card` or `Credit card and prepaid card` ? To avoid this problem the ambiguous categories are merged into one single categories and finally we have only 10 different categories.
 For a sample of 2,000 data, the category distribution looks like this:
-![](images/categories_2k.png)
+![](images/labels.png)
 
 
 <h1 style="background-color:tomato;">Text Data Cleaning</h1>

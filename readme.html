@@ -1,126 +1,455 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-  <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
-<h1 style="background-color:tomato;">
-Background of the Data
-</h1>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 style="background-color:tomato;">Background of the Data</h1>
 <ul>
 <li>Data Source: https://catalog.data.gov/dataset/consumer-complaint-database</li>
 </ul>
 <p>The dataset is obtained from the public data from data.gov website under the domain <code>consumer-complaint-database</code>. The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response. The database generally updates daily. So, each day when we download the dataset, it may be larger than the previous dataset.</p>
 <p>The dataset has above 1 million rows and 18 columns out of which, for the text data category classification, we are only interested in two features: <code>Product</code> and <code>Consumer complaint narrative</code>.</p>
-<h1 style="background-color:tomato;">
-Business Problem
-</h1>
+<h1 style="background-color:tomato;">Business Problem</h1>
 <p>This project aims to accurately classify the Product category of the complaint. There are more than 10 categories of the product such as <code>Mortgage</code>, <code>Debt collection</code> and so on. Our aim is to read the text complaint and classify as on of these category.</p>
-<p style="color:green;">
-NOTE
-</p>
-<p>Originally there are more than 10 categories in original database, but some of the categories are ambiguous, such as there are three different categories <code>Credit card</code>, <code>Prepaid card</code>, and <code>Credit card or prepaid card</code>. If we have a given complaint about credit card, what should it be classified as? <code>Credit card</code> or <code>Credit card and prepaid card</code> ? To avoid this problem the ambiguous categories are merged into one single categories and finally we have only 10 different categories. For a sample of 2,000 data, the category distribution looks like this: <img src="images/categories_2k.png" /></p>
-<h1 style="background-color:tomato;">
-Text Data Cleaning
-</h1>
-<p>Usually the written text is full of informal language and requires cleaning the text before we proceed with analyzing the text. For example, we need to remove the STOPWORDS and expand the contractions. Data cleaning strategy: 1. split combined text: <code>areYou</code> ==&gt; <code>are You</code> 1. lowercase: <code>You</code> ==&gt; <code>you</code> 1. expand apostrophes: <code>you're</code> ==&gt; <code>you are</code> 1. remove punctuation: <code>hi !</code> ==&gt; <code>hi</code> 1. remove digits: <code>gr8</code> ==&gt; <code>gr</code> 1. remove repeated substring: <code>ha ha</code> ==&gt; <code>ha</code> 1. remove stop words: <code>I am good</code> ==&gt; <code>good</code> 1. lemmatize: <code>apples</code> ==&gt; <code>apple</code></p>
-<h1 style="background-color:tomato;">
-Tf-idf:
-</h1>
+<p style="color:green;">NOTE</p>
+<p>Originally there are more than 10 categories in original database, but some of the categories are
+ambiguous, such as there are three different categories <code>Credit card</code>, <code>Prepaid card</code>, and <code>Credit card or prepaid card</code>. If we have a given complaint about credit card, what should it be classified as? <code>Credit card</code> or <code>Credit card and prepaid card</code> ? To avoid this problem the ambiguous categories are merged into one single categories and finally we have only 10 different categories.
+For a sample of 2,000 data, the category distribution looks like this:
+<img src="images/labels.png" alt=""></p>
+<h1 style="background-color:tomato;">Text Data Cleaning</h1>
+<p>Usually the written text is full of informal language and requires cleaning the text before we proceed with
+analyzing the text. For example, we need to remove the STOPWORDS and expand the contractions.
+Data cleaning strategy:</p>
+<ol>
+<li>split combined text: <code>areYou</code> ==&gt; <code>are You</code></li>
+<li>lowercase: <code>You</code> ==&gt; <code>you</code></li>
+<li>expand apostrophes: <code>you're</code> ==&gt; <code>you are</code></li>
+<li>remove punctuation: <code>hi !</code> ==&gt; <code>hi</code></li>
+<li>remove digits: <code>gr8</code> ==&gt; <code>gr</code></li>
+<li>remove repeated substring: <code>ha ha</code> ==&gt; <code>ha</code></li>
+<li>remove stop words: <code>I am good</code> ==&gt; <code>good</code></li>
+<li>lemmatize: <code>apples</code> ==&gt; <code>apple</code></li>
+</ol>
+<h1 style="background-color:tomato;">Tf-idf:</h1>
 <p>For the text processing tasks (NLP), we usually use a method called <code>Term Frequency - Inverse Document Frequency</code>.</p>
-<p style="color:green;">
-Term Frequency:
-</p>
+<p style="color:green;">Term Frequency:</p>
 <p>This gives how often a given word appears within a document.</p>
-<pre><code>
+<pre class="hljs"><code><div>
 TF = Number of times the term appears in the doc
      ----------------------------------------------
-     Total number of words in the doc
-</code></pre>
-<p style="color:green;">
-Inverse Document Frequency:
-</p>
-<p>This gives how often the word appers across the documents. If a term is very common among documents (e.g.,<code>the</code>, <code>a</code>, <code>is</code>), then we have low IDF score.</p>
-<pre><code>            Number of docs
-IDF = ln (  --------------------------------)
-            Number docs the term appears in</code></pre>
-<p style="color:green;">
-Term Frequency – Inverse Document Frequency TF-IDF:
-</p>
-<p>TF-IDF is the product of the TF and IDF scores of the term.</p>
-<pre><code>           TF
-TF-IDF = ------
-           IDF</code></pre>
-<h1 style="background-color:tomato;">
-Top N correlated terms per category
-</h1>
-<p>We can use scikitlearn text vectorizer class <code>sklearn.feature_extraction.text.TfidfVectorizer</code> to get the vectorized form of given text data. Then using feature selection (<code>sklearn.feature_selection.chi2</code>) we get following top most unigrams and bigrams for each categories: <img src="images/top_correlated_terms.png" /></p>
-<h1 style="background-color:tomato;">
-Modelling Text data
-</h1>
-<p>We can not use the raw text data as the input for scikit-learn classifiers. We first need to vectorize them and convert the words to number. Here, in this project I have used the Tf-idf vectorizer with ngram of (1,2) and tried varios classifiers. Among many classifiers, I found svm.LinearSVC gave me the best accuracy. For the 2019 data with sampling of 2000 samples with random seed of 100, I got the accuracy of 0.8125 for the test data. For the full data of 2019 (124,907 almost 125k) after splitting train-test as 80%-20%, I got the accuracy of 0.8068.</p>
-<h1 style="background-color:tomato;">
-Model Evaluation
-</h1>
-<p><img src="images/classification_report.png" /> <img src="images/confusion_matrix.png" /> <img src="images/roc_auc.png" /> <img src="images/precision_recall.png" /> <img src="images/class_prediction_error.png" /></p>
-<h1 style="background-color:tomato;">
-Big Data Analysis
-</h1>
-<p>Here, we have so far used only the portion of the data (2,000 samples out of million samples) and used scikit-learn models. But for real world data we may need to use all data for better performances. For large data pandas can not handle the data and the program crashes. So, we need to use the big data architectures such as Amazon AWS or IMB Watson so on, where we can use pandas by assigning larger RAM and CPU. However, we can also use the open source free modules such as dask or pyspark which can scale upto multiple gigabytes of data. Here, I have used pyspark which can be both used in laptop and also in Amazon AWS servers.</p>
-<p style="color:green;">
-NOTE:
-</p>
-<p>Pyspark is an immature library. It was borrowed from scala and many functionalities are still need to be implemented. For example, while reading the <code>complaints.csv</code> file, using pandas we can simply use <code>pd.read_csv</code>, however, pyspark is not sophisticated enough to read the csv file automatically when it has multiline. To cirumvent these obstacles we can use spark read option with <code>multiLine=True, escape='&quot;'</code>.</p>
-<h1 style="background-color:tomato;">
-Modelling Pipeline
-</h1>
-<p>For text data processing using pyspark, here I have used following pipelines:</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> Tokenizer,StopWordsRemover,HashingTF,IDF
+	 Total number of words in the doc
 
-tokenizer <span class="op">=</span> Tokenizer().setInputCol(<span class="st">&quot;complaint&quot;</span>).setOutputCol(<span class="st">&quot;words&quot;</span>)
-remover<span class="op">=</span> StopWordsRemover().setInputCol(<span class="st">&quot;words&quot;</span>).setOutputCol(<span class="st">&quot;filtered&quot;</span>).setCaseSensitive(<span class="va">False</span>)
-hashingTF <span class="op">=</span> HashingTF().setNumFeatures(<span class="dv">1000</span>).setInputCol(<span class="st">&quot;filtered&quot;</span>).setOutputCol(<span class="st">&quot;rawFeatures&quot;</span>)
-idf <span class="op">=</span> IDF().setInputCol(<span class="st">&quot;rawFeatures&quot;</span>).setOutputCol(<span class="st">&quot;features&quot;</span>).setMinDocFreq(<span class="dv">0</span>)</code></pre></div>
+</div></code></pre>
+<p style="color:green;">Inverse Document Frequency:</p>
+<p>This gives how often the word appers across the documents.
+If a term is very common among documents (e.g.,<code>the</code>, <code>a</code>, <code>is</code>),
+then we have low IDF score.</p>
+<pre class="hljs"><code><div>            Number of docs
+DF = ln (  --------------------------------)
+		    Number docs the term appears in
+</div></code></pre>
+<p style="color:green;">Term Frequency – Inverse Document Frequency TF-IDF:</p>
+<p>TF-IDF is the product of the TF and IDF scores of the term.</p>
+<pre class="hljs"><code><div>           TF
+TF-IDF = ------
+           DF
+</div></code></pre>
+<h1 style="background-color:tomato;">Top N correlated terms per category</h1>
+<p>We can use scikitlearn text vectorizer class <code>sklearn.feature_extraction.text.TfidfVectorizer</code> to get
+the vectorized form of given text data. Then using feature selection (<code>sklearn.feature_selection.chi2</code>) we get
+following top most unigrams and bigrams for each categories:
+<img src="images/top_correlated_terms.png" alt=""></p>
+<h1 style="background-color:tomato;">Modelling Text data</h1>
+<p>We can not use the raw text data as the input for scikit-learn classifiers.
+We first need to vectorize them and convert the words to number. Here, in this
+project I have used the Tf-idf vectorizer with ngram of (1,2) and tried varios
+classifiers. Among many classifiers, I found svm.LinearSVC gave me the best accuracy.
+For the 2019 data with sampling of 2000 samples with random seed of 100, I got the
+accuracy of 0.8125 for the test data. For the full data of 2019 (124,907 almost 125k)
+after splitting train-test as 80%-20%, I got the accuracy of 0.8068.</p>
+<h1 style="background-color:tomato;">Model Evaluation</h1>
+<p><img src="images/classification_report.png" alt="">
+<img src="images/confusion_matrix.png" alt="">
+<img src="images/roc_auc.png" alt="">
+<img src="images/precision_recall.png" alt="">
+<img src="images/class_prediction_error.png" alt=""></p>
+<h1 style="background-color:tomato;">Big Data Analysis</h1>
+<p>Here, we have so far used only the portion of the data (2,000 samples out of million samples) and used scikit-learn models. But for real world data we may need to use all data for better performances. For large
+data pandas can not handle the data and the program crashes. So, we need to use the big data architectures such as
+Amazon AWS or IMB Watson so on, where we can use pandas by assigning larger RAM and CPU. However, we can also use the open source free modules such as dask or pyspark which can scale upto multiple gigabytes of data. Here, I have used pyspark which can be both used in laptop and also in Amazon AWS servers.</p>
+<p style="color:green;">NOTE:</p>
+<p>Pyspark is an immature library. It was borrowed from scala and many functionalities are still need to be implemented. For example, while reading the <code>complaints.csv</code> file, using pandas we can simply use <code>pd.read_csv</code>, however, pyspark is not sophisticated enough to read the csv file automatically when it has multiline. To cirumvent these obstacles we can use spark read option with <code>multiLine=True, escape='&quot;'</code>.</p>
+<h1 style="background-color:tomato;">Modelling Pipeline</h1>
+<p>For text data processing using pyspark, here I have used following pipelines:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> pyspark.ml.feature <span class="hljs-keyword">import</span> Tokenizer,StopWordsRemover,HashingTF,IDF
+
+tokenizer = Tokenizer().setInputCol(<span class="hljs-string">"complaint"</span>).setOutputCol(<span class="hljs-string">"words"</span>)
+remover= StopWordsRemover().setInputCol(<span class="hljs-string">"words"</span>).setOutputCol(<span class="hljs-string">"filtered"</span>).setCaseSensitive(<span class="hljs-literal">False</span>)
+hashingTF = HashingTF().setNumFeatures(<span class="hljs-number">1000</span>).setInputCol(<span class="hljs-string">"filtered"</span>).setOutputCol(<span class="hljs-string">"rawFeatures"</span>)
+idf = IDF().setInputCol(<span class="hljs-string">"rawFeatures"</span>).setOutputCol(<span class="hljs-string">"features"</span>).setMinDocFreq(<span class="hljs-number">0</span>)
+</div></code></pre>
+
 </body>
 </html>
