@@ -53,14 +53,20 @@ TF = Number of times the term appears in the doc
 
 <p style="color:green;">Inverse Document Frequency:</p>
 
-This gives how often the word appers across the documents.
+This gives how often the word appears across the documents.
 If a term is very common among documents (e.g.,`the`, `a`, `is`),
 then we have low IDF score.
 
 ```
-            Number of docs
-DF = ln (  --------------------------------)
-		    Number docs the term appears in
+     Number of docs the term appears
+DF = -----------------------------------
+	Total number docs in the corpus
+
+But, conventionally, document frequency (Df) is defined as log of ratio,
+
+            Number of docs the term appears
+DF = ln (  ----------------------------------)
+		  Total number docs in the corpus
 ```
 
 <p style="color:green;">Term Frequency – Inverse Document Frequency TF-IDF:</p>
@@ -83,9 +89,9 @@ following top most unigrams and bigrams for each categories:
 
 <h1 style="background-color:tomato;">Modelling Text data</h1>
 
-We can not use the raw text data as the input for scikit-learn classifiers.
+We can not use the raw text data as the input for `scikit-learn` classifiers.
 We first need to vectorize them and convert the words to number. Here, in this
-project I have used the Tf-idf vectorizer with ngram of (1,2) and tried varios
+project I have used the Tf-idf vectorizer with ngram of (1,2) and tried various
 classifiers. Among many classifiers, I found svm.LinearSVC gave me the best accuracy.
 For the 2019 data with sampling of 2000 samples with random seed of 100, I got the
 accuracy of 0.8125 for the test data. For the full data of 2019 (124,907 almost 125k)
@@ -101,18 +107,18 @@ after splitting train-test as 80%-20%, I got the accuracy of 0.8068.
 
 <h1 style="background-color:tomato;">Big Data Analysis</h1>
 
-Here, we have so far used only the portion of the data (2,000 samples out of million samples) and used scikit-learn models. But for real world data we may need to use all data for better performances. For large
-data pandas can not handle the data and the program crashes. So, we need to use the big data architectures such as
-Amazon AWS or IMB Watson so on, where we can use pandas by assigning larger RAM and CPU. However, we can also use the open source free modules such as dask or pyspark which can scale upto multiple gigabytes of data. Here, I have used pyspark which can be both used in laptop and also in Amazon AWS servers.
+Here, we have so far used only the small portion of the data (2,000 samples out of million samples) and used `scikit-learn` models for the text analysis. But, for the real world data, we may need to use all the data for better performances.
+
+For large data, pandas crashes and we need to look for alternative methods such as Amazon AWS or IBM Watson. Also, we can use the open source modules such as `dask` or `pyspark` which can scale up to multiple gigabytes of data. For this project, I have used both `pyspark` and Amazon AWS servers.
 
 <p style="color:green;">NOTE:</p>
 
-Pyspark is an immature library. It was borrowed from scala and many functionalities are still need to be implemented. For example, while reading the `complaints.csv` file, using pandas we can simply use `pd.read_csv`, however, pyspark is not sophisticated enough to read the csv file automatically when it has multiline. To cirumvent these obstacles we can use spark read option with `multiLine=True, escape='"'`.
+`Pyspark` is an immature library. It was borrowed from scala and many functionalities are still need to be implemented. For example, while reading the `complaints.csv` file, using pandas we can simply use `pd.read_csv`, however, pyspark is not sophisticated enough to read the csv file automatically when it has multiline. To circumvent these obstacles we can use spark read option with `multiLine=True, escape='"'`.
 
 
 <h1 style="background-color:tomato;">Modelling Pipeline</h1>
 
-For text data processing using pyspark, here I have used following pipelines:
+For text data processing using `pyspark`, here I have used following pipelines:
 ```python
 from pyspark.ml.feature import Tokenizer,StopWordsRemover,HashingTF,IDF
 
